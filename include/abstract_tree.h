@@ -1,13 +1,13 @@
-#ifndef tree_h
-#define tree_h
+#ifndef abstract_tree_h
+#define abstract_tree_h
 
 #include "collection.h"
 
 namespace stdcol {
     template <typename T>
-    class tree_node {
+    class abstract_tree_node {
     public:
-        using tree_link = tree_node<T>*;
+        using tree_link = abstract_tree_node<T>*;
 
         virtual T& get_value() = 0;
 
@@ -25,7 +25,7 @@ namespace stdcol {
     };
 
     template <typename node_t>
-    class tree {
+    class abstract_tree {
     public:
         using link = node_t*;
 

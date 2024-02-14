@@ -73,7 +73,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\binary_tree.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\tree.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\abstract_tree.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)include\priority_queue.h">

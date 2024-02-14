@@ -22,7 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\set.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\stack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\stdcol_hasher.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\tree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\abstract_tree.h" />
     <None Include="$(MSBuildThisFileDirectory)include\array.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\collection.h" />
     <None Include="$(MSBuildThisFileDirectory)include\dynamic_array.h" />

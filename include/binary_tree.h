@@ -1,7 +1,7 @@
 #ifndef binary_tree_h
 #define binary_tree_h
 
-#include "tree.h"
+#include "abstract_tree.h"
 #include "array.h"
 #include "dynamic_array.h"
 #include "stack.h"
@@ -12,9 +12,9 @@ namespace stdcol {
     class binary_tree;
 
     template <typename T>
-    class binary_tree_node : public tree_node<T> {
+    class binary_tree_node : public abstract_tree_node<T> {
     public:
-        using node = tree_node<T>;
+        using node = abstract_tree_node<T>;
 
         using link = binary_tree_node<T>*;
 
@@ -167,7 +167,7 @@ namespace stdcol {
     }
 
     template <typename T>
-    class binary_tree : public tree<binary_tree_node<T>> {
+    class binary_tree : public abstract_tree<binary_tree_node<T>> {
     public:
         using node = binary_tree_node<T>;
 
