@@ -11,11 +11,19 @@ namespace stdcol {
     template <typename T>
     class binary_tree;
 
+    enum class rotations {
+        left,
+        right,
+        left_right,
+        right_left
+    };
+
     template <typename T>
     class binary_tree_node : public abstract_tree_node<T> {
     public:
         using link = binary_tree_node<T>*;
 
+        using const_link = const binary_tree_node<T>*;
 
         binary_tree_node()
             : value(T()), parent_node(nullptr), children_nodes({ nullptr, nullptr }) {}
@@ -48,6 +56,79 @@ namespace stdcol {
 
         link& right() const {
             return children_nodes[1];
+        }
+
+        index height() const {
+            const_link current = this;
+            index max_height;
+            for (max_height = 0; current != nullptr; current = current->left(), max_height++) {}
+
+            current = this;
+            index right_height;
+            for (right_height = 0; current != nullptr; current = current->right(), right_height++) {}
+
+            if (max_height < right_height) {
+                max_height = right_height;
+            }
+
+            return max_height;
+        }
+
+        link rotate(rotations rotation) {
+            switch (rotation) {
+                case rotations::left:
+                    if (right() == nullptr) {
+                        return this;
+                    }
+
+                    right()->parent_node = parent_node;
+                    if (right()->parent_node != nullptr) {
+                        right()->parent_node->left() = right();
+                    }
+                    parent_node = right();
+
+                    right() = right()->left();
+                    if (right() != nullptr) {
+                        right()->parent_node = this;
+                    }
+
+                    parent_node->left() = this;
+                    return parent_node;
+                case rotations::right:
+                    if (left() == nullptr) {
+                        return this;
+                    }
+
+                    left()->parent_node = parent_node;
+                    if (left()->parent_node != nullptr) {
+                        left()->parent_node->right() = left();
+                    }
+                    parent_node = left();
+
+                    left() = left()->right();
+                    if (left() != nullptr) {
+                        left()->parent_node = this;
+                    }
+
+                    parent_node->right() = this;
+                    return parent_node;
+                case rotations::left_right:
+                    if (left() == nullptr) {
+                        return this;
+                    }
+
+                    left()->rotate(rotations::left);
+                    return rotate(rotations::right);
+                case rotations::right_left:
+                    if (right() == nullptr) {
+                        return this;
+                    }
+
+                    right()->rotate(rotations::right);
+                    return rotate(rotations::left);
+                default:
+                    return this;
+            }
         }
 
     protected:
@@ -300,6 +381,19 @@ namespace stdcol {
             }
 
             return nullptr;
+        }
+
+        link rotate(link node, rotations rotation) {
+            if (node == nullptr) {
+                return root_node;
+            }
+
+            if (node == root_node) {
+                root_node = node->rotate(rotation);
+                return root_node;
+            } else {
+                return node->rotate(rotation);
+            }
         }
 
         tree_traversals::in_order<T> begin() {
