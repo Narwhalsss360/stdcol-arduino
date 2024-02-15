@@ -503,6 +503,16 @@ TesterFunction tests[] = {
 
 			return test_pass;
 		}
+	},
+	{
+		"tree",
+		[](TesterFunction& this_test)
+		{
+			using stdcol::tree;
+			tree<int> int_tree;
+
+			return test_pass;
+		}
 	}
 };
 
