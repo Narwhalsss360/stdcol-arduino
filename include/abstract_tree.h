@@ -11,6 +11,8 @@ namespace stdcol {
 
         virtual T& get_value() = 0;
 
+        virtual const T& get_value() const = 0;
+
         virtual collection<tree_link>& children() = 0;
 
         virtual tree_link parent() = 0;
@@ -29,7 +31,11 @@ namespace stdcol {
     public:
         using link = node_t*;
 
+        using const_link = const node_t*;
+
         virtual link root() = 0;
+
+        virtual const_link root() const = 0;
     };
 }
 

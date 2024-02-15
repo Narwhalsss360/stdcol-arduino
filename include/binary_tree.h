@@ -16,6 +16,7 @@ namespace stdcol {
     public:
         using link = binary_tree_node<T>*;
 
+
         binary_tree_node()
             : value(T()), parent_node(nullptr), children_nodes({ nullptr, nullptr }) {}
 
@@ -26,6 +27,10 @@ namespace stdcol {
             : value(args...), parent_node(parent_node), children_nodes({ nullptr , nullptr }) {}
 
         T& get_value() override {
+            return value;
+        }
+
+        const T& get_value() const override {
             return value;
         }
 
@@ -171,10 +176,16 @@ namespace stdcol {
 
         using link = node*;
 
+        using const_link = const node*;
+
         binary_tree()
             : root_node(nullptr) {}
 
         link root() override {
+            return root_node;
+        }
+
+        const_link root() const override {
             return root_node;
         }
 
