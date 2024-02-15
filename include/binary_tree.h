@@ -14,8 +14,6 @@ namespace stdcol {
     template <typename T>
     class binary_tree_node : public abstract_tree_node<T> {
     public:
-        using node = abstract_tree_node<T>;
-
         using link = binary_tree_node<T>*;
 
         binary_tree_node()
@@ -35,8 +33,8 @@ namespace stdcol {
             return parent_node;
         }
 
-        collection<typename node::tree_link>& children() override {
-            return (collection<typename node::tree_link>&)children_nodes;
+        collection<typename abstract_tree_node<T>::tree_link>& children() override {
+            return (collection<typename abstract_tree_node<T>::tree_link>&)children_nodes;
         }
 
         link& left() const {
