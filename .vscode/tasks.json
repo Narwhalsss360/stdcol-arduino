@@ -11,7 +11,7 @@
 				"command": "make",
 				"args": [
 					"clean_win"
-				],
+				]
 			},
 			"linux": {
 				"command": "make",
@@ -31,12 +31,13 @@
 				"args": [
 					"build_win"
 				],
-				"problemMatcher":"$msCompile",
+				"problemMatcher": "$msCompile",
 				"options": {
 					"shell": {
 						"executable": "cmd.exe",
 						"args": [
-							"/d", "/c vcvars64 &"
+							"/d",
+							"/c vcvars64 &"
 						]
 					}
 				}
@@ -46,7 +47,11 @@
 				"args": [
 					"build_unix"
 				],
-				"problemMatcher":"$gcc"
+				"problemMatcher": "$gcc"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
 			}
 		}
 	]
