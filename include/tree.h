@@ -22,7 +22,7 @@ namespace stdcol {
 
         template <typename... args_t>
         tree_node(link parent_node, args_t... args)
-            : value(args...), parent_node(nullptr), children(linked<link>()) {}
+            : value(args...), parent_node(nullptr), children_nodes(linked<link>()) {}
 
         T& get_value() override {
             return value;
@@ -40,7 +40,7 @@ namespace stdcol {
             return children_nodes;
         }
 
-        tree_link parent() override {
+        link parent() override {
             return parent_node;
         };
 
