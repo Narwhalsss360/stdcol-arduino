@@ -74,6 +74,10 @@ namespace stdcol {
             return max_height;
         }
 
+        long long balance_height() const {
+            return (left() == nullptr ? 0 : left()->height()) - (right() == nullptr ? 0 : right()->height());
+        }
+
         link rotate(rotations rotation) {
             switch (rotation) {
                 case rotations::left:
@@ -268,6 +272,12 @@ namespace stdcol {
 
         const_link root() const override {
             return root_node;
+        }
+
+        link set_root(link new_root) {
+            link old_root = root_node;
+            root_node = new_root;
+            return old_root;
         }
 
         template <typename... args_t>
