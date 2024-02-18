@@ -87,7 +87,11 @@ namespace stdcol {
 
                     right()->parent_node = parent_node;
                     if (right()->parent_node != nullptr) {
-                        right()->parent_node->left() = right();
+                        if (right()->parent_node->left() == this) {
+                            right()->parent_node->left() = right();
+                        } else {
+                            right()->parent_node->right() = right();
+                        }
                     }
                     parent_node = right();
 
@@ -105,7 +109,11 @@ namespace stdcol {
 
                     left()->parent_node = parent_node;
                     if (left()->parent_node != nullptr) {
-                        left()->parent_node->right() = left();
+                        if (left()->parent_node->right() == this) {
+                            left()->parent_node->right() = left();
+                        } else {
+                            left()->parent_node->left() = left();
+                        }
                     }
                     parent_node = left();
 
