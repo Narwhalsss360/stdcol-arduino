@@ -143,6 +143,44 @@ namespace stdcol {
             }
         }
 
+        link balance_ancestors() {
+            link child = this;
+            link parent = parent_node;
+
+            while (parent != nullptr) {
+                long long child_balance = child->balance_height();
+                long long parent_balance = parent->balance_height();
+
+                if (parent_balance < -1) {
+                    if (child_balance <= 0) {
+                        child = parent->rotate(rotations::left);
+                        goto new_child;
+                    }
+
+                    if (child_balance > 0) {
+                        child = parent->rotate(rotations::right_left);
+                        goto new_child;
+                    }
+                } else if (parent_balance > 1) {
+                    if (child_balance >= 0) {
+                        child = parent->rotate(rotations::right);
+                        goto new_child;
+                    }
+
+                    if (child_balance < 0) {
+                        child = parent->rotate(rotations::left_right);
+                        goto new_child;
+                    }
+                }
+
+                child = child->parent_node;
+            new_child:
+                parent = child->parent_node;
+            }
+
+            return child;
+        }
+
     protected:
         friend class binary_tree<T>;
 

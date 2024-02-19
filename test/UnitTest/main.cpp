@@ -425,18 +425,15 @@ TesterFunction tests[] = {
 
 			binary_tree<int> tree;
 
-			tree.emplace(4);
-			tree.emplace(2);
-			tree.emplace(6);
-			tree.emplace(1);
-			tree.emplace(3);
-			tree.emplace(5);
-			tree.emplace(7);
-
-			tree.rotate(tree.root(), rotations::left_right);
+			tree.set_root(tree.emplace(1)->balance_ancestors());
+			tree.set_root(tree.emplace(2)->balance_ancestors());
+			tree.set_root(tree.emplace(3)->balance_ancestors());
+			tree.set_root(tree.emplace(4)->balance_ancestors());
+			tree.set_root(tree.emplace(5)->balance_ancestors());
+			tree.set_root(tree.emplace(6)->balance_ancestors());
+			tree.set_root(tree.emplace(7)->balance_ancestors());
 
 			binary_tree_node<int>* root = tree.root();
-
 			tlog << "The height of the tree is " << root->height() << '\n';
 
 			binary_tree_node<int>* node_5 = tree.find(5);
