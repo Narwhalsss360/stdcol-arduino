@@ -12,6 +12,7 @@ struct vector3 {
             case 1: return y;
             case 2: return z;
         }
+        return x;
     }
 };
 
