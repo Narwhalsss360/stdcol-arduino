@@ -48,7 +48,7 @@ namespace stdcol {
             }
 
             if (block) {
-                collectable_t* new_block = new collectable_t[new_capacity]();
+                collectable_t* new_block = new collectable_t[(typename index::int_type)new_capacity]();
                 if (new_block == nullptr) {
                     return false;
                 }
@@ -60,7 +60,7 @@ namespace stdcol {
                 delete[] block;
                 block = new_block;
             } else {
-                block = new collectable_t[new_capacity]();
+                block = new collectable_t[(typename index::int_type)new_capacity]();
                 if (block == nullptr) {
                     return false;
                 }
