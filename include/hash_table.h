@@ -69,12 +69,8 @@ namespace stdcol {
                 }
             }
 
-            if (key_bucket.insert(0, { key, collectable_t() })) {
-                return key_bucket[0].value;
-            }
-
-            //Only gets here if adding was not possible, dereference nullptr for now, find alternative later.
-            return *(collectable_t*)nullptr;
+            key_bucket.insert(0, { key, collectable_t() });
+            return key_bucket[0].value;
         }
 
         typename dict::buckets_t& buckets() override {
