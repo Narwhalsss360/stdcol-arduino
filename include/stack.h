@@ -27,7 +27,9 @@ namespace stdcol {
             if (this->size() == 0) {
                 return false;
             }
-            *out = *this->at(this->size() - 1);
+            if (out != nullptr) {
+                *out = *this->at(this->size() - 1);
+            }
             this->remove(this->size() - 1);
             return true;
         }
