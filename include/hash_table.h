@@ -52,7 +52,7 @@ namespace stdcol {
             return true;
         }
 
-        typename dict::kvp_t* get(const hashable_t& key) {
+        typename dict::kvp_t* get(const hashable_t& key) override {
             for (typename dict::kvp_t& kvp : bucket(key)) {
                 if (kvp.key == key) {
                     return & kvp;
@@ -61,7 +61,7 @@ namespace stdcol {
             return nullptr;
         }
 
-        collectable_t& get_add(const hashable_t& key) {
+        collectable_t& get_add(const hashable_t& key) override {
              typename dict::bucket_t& key_bucket = bucket(key);
              for (typename dict::kvp_t& kvp : key_bucket) {
                 if (kvp.key == key) {
