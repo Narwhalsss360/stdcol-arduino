@@ -6,6 +6,7 @@
 #include "dynamic_array.h"
 #include "stack.h"
 #include "set.h"
+#include <queue.h>
 
 namespace stdcol {
     template <typename T>
@@ -59,19 +60,7 @@ namespace stdcol {
         }
 
         index height() const {
-            const_link current = this;
-            index max_height;
-            for (max_height = 0; current != nullptr; current = current->left(), max_height++) {}
-
-            current = this;
-            index right_height;
-            for (right_height = 0; current != nullptr; current = current->right(), right_height++) {}
-
-            if (max_height < right_height) {
-                max_height = right_height;
-            }
-
-            return max_height;
+            return height_helper(this);
         }
 
         long long balance_height() const {
@@ -187,6 +176,22 @@ namespace stdcol {
         T value;
         mutable link parent_node;
         mutable array<link, 2> children_nodes;
+
+    private:
+        index height_helper(const_link node) const {
+            if (node == 0) {
+                return 0;
+            }
+
+            index left_height = height_helper(node->left());
+            index right_height = height_helper(node->right());
+
+            if (left_height < right_height) {
+                return right_height + 1;
+            }
+
+            return left_height + 1;
+        }
     };
 
     namespace tree_traversals {
