@@ -1,0 +1,11 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+    build_unix:
+        runs-on: ubuntu-latest
+        name: build unix
+        steps:
+            - uses: actions/checkout@v3
+            - run: make build_unix
