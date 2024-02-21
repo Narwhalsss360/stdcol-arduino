@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdcol>
+#include "TestPlatform.h"
 #include "TestFunctionWrapper.h"
 #include "TestObjects.h"
-#include <stdcol>
+#include "TestUtilities.h"
 
 //stl hash<>
 #include <system_error> //posix
@@ -538,13 +540,47 @@ TesterFunction tests[] = {
 
 			return test_pass;
 		}
-	}
+	},
+    {
+        "directed_graph",
+        [](TesterFunction& this_test)
+        {
+            using stdcol::directed_graph;
+            using stdcol::graph_node;
+
+            directed_graph<int> graph;
+
+            graph_node<int>* n1 = graph.emplace(1);
+            if (n1 == nullptr) {
+                return test_fail;
+            }
+
+            graph_node<int>* n2 = graph.emplace(2);
+            if (n2 == nullptr) {
+                return test_fail;
+            }
+
+            if (!n1->add_edge(n2)) {
+                return test_fail;
+            }
+
+            if (!graph.add_edge(2, 1)) {
+                return test_fail;
+            }
+
+            tlog << n1->get_edges() << '\n';
+
+            return graph.get(1) == n1 && graph.get(2) == n2;
+        }
+    }
 };
 
 int main() {
 	using std::cout;
 	using std::cin;
 	using std::exception;
+
+    tlog << "Running UnitTest on platform " << plat << '\n';
 
 	for (TesterFunction& test : tests) {
 		try {

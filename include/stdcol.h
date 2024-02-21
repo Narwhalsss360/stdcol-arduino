@@ -21,5 +21,6 @@
 #include "abstract_tree.h"
 #include "binary_tree.h"
 #include "tree.h"
+#include "directed_graph.h"
 
 #endif
