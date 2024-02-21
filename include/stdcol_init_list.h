@@ -1,6 +1,9 @@
 #ifndef stdcol_init_list_h
 #define stdcol_init_list_h
 
+#include "stdcol_platform.h"
+
+/*
 #ifdef __has_include
 #if !__has_include(<initializer_list>)
 #define stdcol_init_list_required
@@ -10,12 +13,9 @@
 #define stdcol_init_list_required
 #endif
 #endif
+*/
 
-#ifndef stdcol_init_list_required
-#include <initializer_list>
-#endif
-
-#ifdef stdcol_init_list_required
+#ifdef stdcol_nostl
 #include <stddef.h>
 
 namespace std {
@@ -35,6 +35,8 @@ namespace std {
         size_t _size;
     };
 }
+#else
+#include <initializer_list>
 #endif
 
 #include "enumerables.h"
