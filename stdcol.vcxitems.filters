@@ -85,5 +85,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\tree.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\stdcol_platform.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

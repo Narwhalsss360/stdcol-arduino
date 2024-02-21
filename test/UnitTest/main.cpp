@@ -581,6 +581,7 @@ TesterFunction tests[] = {
 entry_symbol {
     Platform::setup();
     tlog << "Running UnitTest on platform " << plat << '\n';
+    tlog << "stdcol_platform_name: " << stdcol_platform_name << '\n';
 
 	for (TesterFunction& test : tests) {
 #ifdef plat_arduino

@@ -1,6 +1,7 @@
 #ifndef stdcol_h
 #define stdcol_h
 
+#include "stdcol_platform.h"
 #include "stdcol_index.h"
 #include "iterables.h"
 #include "enumerables.h"
