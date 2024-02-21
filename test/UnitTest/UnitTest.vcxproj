@@ -148,6 +148,8 @@
   <ItemGroup>
     <ClInclude Include="TestFunctionWrapper.h" />
     <ClInclude Include="TestObjects.h" />
+    <ClInclude Include="TestPlatform.h" />
+    <ClInclude Include="TestUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Update="C:\Source\Repositories\Narwhalsss360\stdcol\include\collection">

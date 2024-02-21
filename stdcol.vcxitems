@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)include\binary_tree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\dictionary.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\directed_graph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\hash_table.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\linked.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\priority_queue.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\stack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\stdcol_hasher.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\abstract_tree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\tree.h" />
     <None Include="$(MSBuildThisFileDirectory)include\array.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\collection.h" />
     <None Include="$(MSBuildThisFileDirectory)include\dynamic_array.h" />

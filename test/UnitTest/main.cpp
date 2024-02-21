@@ -6,7 +6,7 @@
 
 //stl hash<>
 #if defined(plat_windows)
-//#include <xhash>
+#include <xhash>
 #elif defined(plat_unix)
 #include <system_error>
 #endif

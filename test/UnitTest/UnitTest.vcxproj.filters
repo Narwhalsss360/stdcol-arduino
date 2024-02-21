@@ -29,5 +29,11 @@
     <ClInclude Include="TestObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestPlatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
