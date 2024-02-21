@@ -2,19 +2,16 @@
 #define TestUtilities_h
 
 #include "TestPlatform.h"
+#include <stdcol.h>
 
-#ifdef plat_arduino
-#include <StreamUtilities.h>
-#define ostream_typename Print
-#else
-#include <iostream>
-#define ostream_typename std::ostream
-#endif
-
-#include <stdcol>
+template <typename T>
+Platform::ostream& operator<<(Platform::ostream& stream, stdcol::graph_node<T>* node) {
+    stream << node->get_value();
+    return stream;
+}
 
 template <typename collectable_t>
-ostream_typename& operator<<(ostream_typename& stream, stdcol::collection<collectable_t>& collection) {
+Platform::ostream& operator<<(Platform::ostream& stream, stdcol::collection<collectable_t>& collection) {
     stdcol::index size = collection.size();
     stream << '[';
     for (auto i : stdcol::enumerate(stdcol::iterate(collection))) {

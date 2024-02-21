@@ -15,5 +15,62 @@
 
 #endif
 
+#ifdef plat_arduino
+#include <Arduino.h>
+#include <StreamUtilities.h>
+#define entry_symbol void setup()
+#define entry_return
+#else
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#define entry_symbol int main()
+#define entry_return return 0
 #endif
 
+namespace stdcol {
+	template <>
+	struct stdcol_hasher<int> {
+		index operator()(const int& n) const {
+			return n;
+		}
+	};
+}
+
+namespace Platform {
+#ifdef plat_arduino
+    using string = String;
+
+    using stringstream = StringStream;
+
+    using ostream = Print;
+
+    ostream& out = Serial;
+
+    void setup() {
+        Serial.begin(115200);
+        while (!Serial);
+    }
+
+    void keywait() {
+        Serial.read();
+    }
+#else
+    using string = std::string;
+
+    using stringstream = std::stringstream;
+
+    using ostream = std::ostream;
+
+    ostream& out = std::cout;
+
+    void setup() {}
+
+    void keywait() {
+        std::cin.get();
+    }
+#endif
+}
+
+#endif

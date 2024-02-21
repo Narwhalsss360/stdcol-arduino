@@ -1,20 +1,22 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <stdcol>
+#include <stdcol.h>
 #include "TestPlatform.h"
 #include "TestFunctionWrapper.h"
 #include "TestObjects.h"
 #include "TestUtilities.h"
 
 //stl hash<>
-#include <system_error> //posix
-//#include <xhash> //win32
+#if defined(plat_windows)
+//#include <xhash>
+#elif defined(plat_unix)
+#include <system_error>
+#endif
 
 constexpr char flog_name[] = "Test Results.log";
 
+#ifndef plat_arduino
 std::ofstream flog = std::ofstream(flog_name);
-std::stringstream tlog;
+#endif
+Platform::stringstream tlog;
 
 TesterFunction tests[] = {
 	{
@@ -28,7 +30,9 @@ TesterFunction tests[] = {
 		"[Runtime] TesterFunction exception catcher test",
 		[](TesterFunction& this_test) {
 			this_test.result = true;
+#ifndef plat_arduino
 			throw test_exception();
+#endif
 			return test_pass;
 		}
 	},
@@ -324,7 +328,6 @@ TesterFunction tests[] = {
 		[](TesterFunction& this_test)
 		{
 			using stdcol::queue;
-			using std::string;
 
 			const int nums[] = { 2, 4, 6, 8, 10 };
 
@@ -359,7 +362,7 @@ TesterFunction tests[] = {
 			using stdcol::hash_table;
 
 			//return test_fail; //dynamic_array<linked<kvp_t>> destructor does a double free
-			auto hashtable = hash_table<int, int, std::hash<int>>(4);
+			auto hashtable = hash_table<int, int, stdcol::hasher<int>>(4);
 			dictionary<int, int>& fsamples = hashtable;
 
 			auto f = [](int x) { return ((x * x * x) / 6) - (2 * x); };
@@ -379,9 +382,9 @@ TesterFunction tests[] = {
 			dictionary<int, int>::buckets_t buckets = fsamples.buckets();
 
 			for (dictionary<int, int>::bucket_t& bucket : buckets) {
-				std::cout << "---\n";
+				tlog << "---\n";
 				for (dictionary<int, int>::kvp_t& kvp : bucket) {
-					std::cout << "    " << kvp.key << ',' << kvp.value << "\n";
+					tlog << "    " << kvp.key << ',' << kvp.value << "\n";
 				}
 			}
 
@@ -575,26 +578,32 @@ TesterFunction tests[] = {
     }
 };
 
-int main() {
-	using std::cout;
-	using std::cin;
-	using std::exception;
-
+entry_symbol {
+    Platform::setup();
     tlog << "Running UnitTest on platform " << plat << '\n';
 
 	for (TesterFunction& test : tests) {
+#ifdef plat_arduino
+		tlog << "Running test " << test.name << ":\n";
+		tlog << test << ": " << resulString[test()] << '\n';
+#else
 		try {
 			tlog << "Running test " << test.name << ":\n";
 			tlog << test << ": " << resulString[test()] << '\n';
 		} catch (const std::exception& e) {
 			tlog << "An exception was thrown in test " << test.name << ", " << e.what() << '\n';
 		}
-		cout << tlog.str();
 		flog << tlog.str();
+#endif
+		Platform::out << tlog.str();
 		tlog.str("");
 	}
 
-	cout << "Press enter to exit...\n";
-	cin.get();
-	return 0;
+	Platform::out << "Press enter to exit...\n";
+	Platform::keywait();
+    entry_return;
 }
+
+#ifdef plat_arduino
+void loop() {}
+#endif

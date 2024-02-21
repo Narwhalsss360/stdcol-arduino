@@ -1,8 +1,7 @@
-#pragma once
+#ifndef TestFunctionWrapper_h
+#define TestFunctionWrapper_h
 
-#include <string>
-#include <ostream>
-#include <exception>
+#include "TestPlatform.h"
 
 #define test_fail false
 #define test_pass true
@@ -20,13 +19,13 @@ struct TesterFunction;
 using test_func = bool (*) (TesterFunction&);
 
 struct TesterFunction {
-	std::string name = "Unnamed | Uninitialized";
+	Platform::string name = "Unnamed | Uninitialized";
 	test_func f = nullptr;
 	bool result = false;
 
 	TesterFunction() {}
 
-	TesterFunction(std::string name, test_func f) : name(name), f(f) {
+	TesterFunction(Platform::string name, test_func f) : name(name), f(f) {
 
 	}
 
@@ -40,14 +39,18 @@ struct TesterFunction {
 	}
 };
 
+#ifndef plat_arduino
 class test_exception : public std::exception {
 public:
 	test_exception() : std::exception() {}
 
 	const char* what() const noexcept override { return "A thrown exception that should be caught, and logged."; }
 };
+#endif
 
-std::ostream& operator<<(std::ostream& stream, const TesterFunction& test) {
+Platform::ostream& operator<<(Platform::ostream& stream, const TesterFunction& test) {
 	stream << '[' << test.name << ']';
 	return stream;
 }
+
+#endif

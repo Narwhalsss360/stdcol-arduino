@@ -1,5 +1,5 @@
-#pragma once
-#include <string>
+#ifndef TestObjects_h
+#define TestObjects_h
 
 //Subscriptable
 struct vector3 {
@@ -23,3 +23,5 @@ struct NonDefaultConstructable {
     NonDefaultConstructable(unsigned int a, int b)
         : a(a), b(b) {}
 };
+
+#endif
