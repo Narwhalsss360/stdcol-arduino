@@ -575,7 +575,21 @@ TesterFunction tests[] = {
 
             return graph.get(1) == n1 && graph.get(2) == n2;
         }
-    }
+    },
+	{
+		"avl_tree",
+		[](TesterFunction& this_test)
+		{
+			using stdcol::avl_tree;
+
+			avl_tree<int> tree;
+			for (int i = 1; i <= 7; i++) {
+				tree.emplace(i);
+			}
+
+			return test_pass;
+		}
+	}
 };
 
 entry_symbol {
