@@ -29,7 +29,7 @@ namespace stdcol {
 
         template <typename... args_t>
         link emplace(args_t... args) {
-            link new_node = bin_tree.emplace<args_t...>(args...);
+            link new_node = bin_tree.emplace(args...);
             bin_tree.set_root(new_node->balance_ancestors());
             return new_node;
         }
