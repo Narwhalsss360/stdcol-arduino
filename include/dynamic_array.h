@@ -42,6 +42,7 @@ namespace stdcol {
             if (new_capacity == 0) {
                 if (block)
                     delete[] block;
+                block = nullptr;
                 block_size = 0;
                 block_capacity = 0;
                 return true;

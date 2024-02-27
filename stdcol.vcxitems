@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\avl_tree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\binary_tree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\dictionary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\directed_graph.h" />
