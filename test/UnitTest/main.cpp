@@ -539,7 +539,30 @@ TesterFunction tests[] = {
 		[](TesterFunction& this_test)
 		{
 			using stdcol::tree;
+			using stdcol::tree_node;
 			tree<int> int_tree;
+
+			/*
+					1
+				2		3
+			  4   5
+			*/
+
+			tree_node<int>* one = new tree_node<int>(nullptr, 1);
+
+			tree_node<int>* two = new tree_node<int>(one, 2);
+			one->links().insert(one->links().size(), two);
+
+			tree_node<int>* three = new tree_node<int>(one, 3);
+			one->links().insert(one->links().size(), three);
+
+			tree_node<int>* four = new tree_node<int>(two, 4);
+			two->links().insert(two->links().size(), four);
+
+			tree_node<int>* five = new tree_node<int>(two, 5);
+			two->links().insert(two->links().size(), five);
+
+			int_tree.set_root(one);
 
 			return test_pass;
 		}
