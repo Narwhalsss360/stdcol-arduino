@@ -298,7 +298,7 @@ namespace stdcol {
             return operator=(static_cast<const collection<T>&>(other));
         }
 
-        ~linked() {
+        virtual ~linked() {
             reserve(0);
         }
 

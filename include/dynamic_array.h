@@ -144,7 +144,7 @@ namespace stdcol {
             return operator=(static_cast<const collection<collectable_t>&>(other));
         }
 
-        ~dynamic_array() {
+        virtual ~dynamic_array() {
             reserve(0);
         }
 

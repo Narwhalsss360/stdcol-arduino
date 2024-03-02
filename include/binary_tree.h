@@ -477,7 +477,7 @@ namespace stdcol {
             return iterable<tree_traversals::post_order<T>>(tree_traversals::post_order<T>(root()), tree_traversals::post_order<T>(nullptr));
         }
 
-        ~binary_tree() {
+        virtual ~binary_tree() {
             remove(root_node);
         }
 
