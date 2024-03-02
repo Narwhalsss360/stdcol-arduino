@@ -100,7 +100,7 @@ namespace stdcol {
         }
 
         priority_queue<collectable_t>& operator=(const priority_queue<collectable_t>& other) {
-            return operator=((const collection<collectable_t>&)other);
+            return operator=(static_cast<const collection<collectable_t>&>(other));
         }
 
     protected:

@@ -15,7 +15,7 @@ namespace stdcol {
         }
 
         dynamic_array(const dynamic_array<collectable_t>& other) : dynamic_array() {
-            *this = (collection<collectable_t>&)other;
+            *this = static_cast<const collection<collectable_t>&>(other);
         }
 
         dynamic_array(index size) : dynamic_array() {
@@ -49,7 +49,7 @@ namespace stdcol {
             }
 
             if (block) {
-                collectable_t* new_block = new collectable_t[(typename index::int_type)new_capacity]();
+                collectable_t* new_block = new collectable_t[static_cast<typename index::int_type>(new_capacity)]();
                 if (new_block == nullptr) {
                     return false;
                 }
@@ -61,7 +61,7 @@ namespace stdcol {
                 delete[] block;
                 block = new_block;
             } else {
-                block = new collectable_t[(typename index::int_type)new_capacity]();
+                block = new collectable_t[static_cast<typename index::int_type>(new_capacity)]();
                 if (block == nullptr) {
                     return false;
                 }
@@ -141,7 +141,7 @@ namespace stdcol {
         }
 
         dynamic_array<collectable_t>& operator=(const dynamic_array<collectable_t>& other) {
-            return operator=((const collection<collectable_t>&)other);
+            return operator=(static_cast<const collection<collectable_t>&>(other));
         }
 
         ~dynamic_array() {

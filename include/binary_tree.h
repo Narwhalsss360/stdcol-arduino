@@ -64,7 +64,7 @@ namespace stdcol {
         }
 
         long long balance_height() const {
-            return (left() == nullptr ? (index)0 : left()->height()) - (right() == nullptr ? (index)0 : right()->height());
+            return (left() == nullptr ? static_cast<index>(0) : left()->height()) - (right() == nullptr ? static_cast<index>(0) : right()->height());
         }
 
         link rotate(rotations rotation) {

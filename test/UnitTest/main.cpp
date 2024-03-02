@@ -42,7 +42,7 @@ TesterFunction tests[] = {
 			using stdcol::index;
 			using stdcol::findex;
 
-			findex fi = (findex::int_type)index(32);
+			findex fi = static_cast<findex::int_type>(index(32));
 			for (index i = 0; i < 10; i++, fi = i * 2 + 1);
 
 			fi = findex();
@@ -72,7 +72,7 @@ TesterFunction tests[] = {
 
 			{
 				tlog << "Using iterable... ";
-				auto fname_iter = iterable<const char*>((const char*)flog_name, flog_name + sizeof(flog_name));
+				auto fname_iter = iterable<const char*>(static_cast<const char*>(flog_name), flog_name + sizeof(flog_name));
 				for (const char& c : fname_iter) {
 					tlog << c;
 				}
@@ -113,7 +113,7 @@ TesterFunction tests[] = {
 
 			{
 				tlog << "Using enumerable... ";
-				auto fname_enum = iterate(enumerable<const char*, const char&>((const char*)flog_name, flog_name + sizeof(flog_name)));
+				auto fname_enum = iterate(enumerable<const char*, const char&>(static_cast<const char*>(flog_name), flog_name + sizeof(flog_name)));
 				for (auto e : fname_enum) {
 					tlog << '(' << e.index << ", " << e << ") ";
 				}
@@ -150,7 +150,7 @@ TesterFunction tests[] = {
 			tlog << '\n';
 
 			for (auto e : enumerate(nums)) {
-				(float&)e = e.index / 2.0f;
+				static_cast<float&>(e) = e.index / 2.0f;
 			}
 
 			tlog << "Index-based: ";
@@ -287,7 +287,7 @@ TesterFunction tests[] = {
 
 			index i = 0;
 			for (int n = 2; n <= 1000; n += n, i++) {
-				items.emplace(i, (unsigned int)(2 * i), n);
+				items.emplace(i, static_cast<unsigned int>(2 * i), n);
 			}
 
 			for (auto& n : iterate(items)) {

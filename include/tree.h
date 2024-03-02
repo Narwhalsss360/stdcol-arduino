@@ -33,7 +33,7 @@ namespace stdcol {
         }
 
         collection<typename abstract_tree_node<T>::tree_link>& children() override {
-            return (collection<typename abstract_tree_node<T>::tree_link>&)children_nodes;
+            return static_cast<collection<typename abstract_tree_node<T>::tree_link>&>(children_nodes);
         }
 
         linked<link>& links() {

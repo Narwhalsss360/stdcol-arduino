@@ -33,7 +33,7 @@ namespace stdcol {
 	template <>
 	struct stdcol_hasher<int> {
 		index operator()(const int& n) const {
-			return n;
+			return static_cast<index>(n);
 		}
 	};
 }

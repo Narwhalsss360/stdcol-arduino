@@ -79,7 +79,7 @@ namespace stdcol {
                     continue;
                 }
 
-                if ((T&)*current == (T&)*new_link) {
+                if (current->value == new_link->value) {
                     vertices.remove(vertices.size() - 1);
                     return &(*current);
                 }
@@ -94,13 +94,13 @@ namespace stdcol {
 
             for (typename linked<node>::link current = vertices.head(); current != nullptr && (source_edge == nullptr || destination_edge == nullptr); current = current->get_next()) {
                 if (source_edge == nullptr) {
-                    if ((T&)**current == source) {
+                    if (static_cast<T&>(**current) == source) {
                         source_edge = &**current;
                     }
                 }
 
                 if (destination_edge == nullptr) {
-                    if ((T&)**current == destination) {
+                    if (static_cast<T&>(**current) == destination) {
                         destination_edge = &**current;
                     }
                 }
@@ -115,7 +115,7 @@ namespace stdcol {
 
         link get(const T& value) const {
             for (typename linked<node>::link current = vertices.head(); current != nullptr; current = current->get_next()) {
-                if ((T&)**current == value) {
+                if (static_cast<T&>(**current) == value) {
                     return &**current;
                 }
             }
