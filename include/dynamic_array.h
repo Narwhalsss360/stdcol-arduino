@@ -144,6 +144,16 @@ namespace stdcol {
             return operator=(static_cast<const collection<collectable_t>&>(other));
         }
 
+        template <size_t array_size, typename ret_t = collectable_t[array_size]>
+        ret_t& c_array() {
+            return (ret_t&)block;
+        }
+
+        template <size_t array_size, typename ret_t = collectable_t[array_size]>
+        const ret_t& c_array() const {
+            return (const ret_t&)block;
+        }
+
         virtual ~dynamic_array() {
             reserve(0);
         }

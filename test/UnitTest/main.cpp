@@ -139,6 +139,10 @@ TesterFunction tests[] = {
 
 			array<float, 10> numArray;
 			collection<float>& nums = numArray;
+			const array<float, 10>& cnumArray = numArray;
+			auto& c_array = numArray.c_array();
+			const auto& cc_carray = cnumArray.c_array();
+
 			for (float& n : nums) {
 				n = 1.0/2.0;
 			}
@@ -172,7 +176,10 @@ TesterFunction tests[] = {
 			using stdcol::enumerate;
 
 			dynamic_array<array<double, 2>> pairsArray = dynamic_array<array<double, 2>>(5);
+			const dynamic_array<array<double, 2>>& cpairsArray = pairsArray;
 			dynamic_collection<array<double, 2>>& pairs = pairsArray;
+			auto& c_array = pairsArray.c_array<5>();
+			const auto& cc_array = pairsArray.c_array<5>();
 
 			auto f = [](double x) { return (x * x * x) - 2.5 * x; };
 
