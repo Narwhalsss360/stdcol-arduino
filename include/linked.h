@@ -80,7 +80,7 @@ namespace stdcol {
             : head_node(nullptr), tail_node(nullptr) {}
 
         linked(const linked<T>& other) : linked() {
-            *this = (collection<T>&)other;
+            *this = static_cast<const collection<T>&>(other);
         }
 
         T* const at(index index) override {
@@ -295,10 +295,10 @@ namespace stdcol {
         }
 
         linked<T>& operator=(const linked<T>& other) {
-            return operator=((const collection<T>&)other);
+            return operator=(static_cast<const collection<T>&>(other));
         }
 
-        ~linked() {
+        virtual ~linked() {
             reserve(0);
         }
 

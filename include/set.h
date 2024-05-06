@@ -16,7 +16,7 @@ namespace stdcol {
         }
 
         set(const set<collectable_t>& other) : set() {
-            *this = (collection<collectable_t>&)other;
+            *this = static_cast<const collection<collectable_t>&>(other);
         }
 
         bool contains(const collectable_t& item) const {
@@ -73,7 +73,7 @@ namespace stdcol {
         }
 
         set<collectable_t>& operator=(const set<collectable_t>& other) {
-            return operator=((const collection<collectable_t>&)other);
+            return operator=(static_cast<const collection<collectable_t>&>(other));
         }
 
     protected:

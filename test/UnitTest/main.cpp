@@ -42,7 +42,7 @@ TesterFunction tests[] = {
 			using stdcol::index;
 			using stdcol::findex;
 
-			findex fi = (findex::int_type)index(32);
+			findex fi = static_cast<findex::int_type>(index(32));
 			for (index i = 0; i < 10; i++, fi = i * 2 + 1);
 
 			fi = findex();
@@ -72,7 +72,7 @@ TesterFunction tests[] = {
 
 			{
 				tlog << "Using iterable... ";
-				auto fname_iter = iterable<const char*>((const char*)flog_name, flog_name + sizeof(flog_name));
+				auto fname_iter = iterable<const char*>(static_cast<const char*>(flog_name), flog_name + sizeof(flog_name));
 				for (const char& c : fname_iter) {
 					tlog << c;
 				}
@@ -113,7 +113,7 @@ TesterFunction tests[] = {
 
 			{
 				tlog << "Using enumerable... ";
-				auto fname_enum = iterate(enumerable<const char*, const char&>((const char*)flog_name, flog_name + sizeof(flog_name)));
+				auto fname_enum = iterate(enumerable<const char*, const char&>(static_cast<const char*>(flog_name), flog_name + sizeof(flog_name)));
 				for (auto e : fname_enum) {
 					tlog << '(' << e.index << ", " << e << ") ";
 				}
@@ -139,6 +139,10 @@ TesterFunction tests[] = {
 
 			array<float, 10> numArray;
 			collection<float>& nums = numArray;
+			const array<float, 10>& cnumArray = numArray;
+			auto& c_array = numArray.c_array();
+			const auto& cc_carray = cnumArray.c_array();
+
 			for (float& n : nums) {
 				n = 1.0/2.0;
 			}
@@ -150,7 +154,7 @@ TesterFunction tests[] = {
 			tlog << '\n';
 
 			for (auto e : enumerate(nums)) {
-				(float&)e = e.index / 2.0f;
+				static_cast<float&>(e) = e.index / 2.0f;
 			}
 
 			tlog << "Index-based: ";
@@ -172,7 +176,10 @@ TesterFunction tests[] = {
 			using stdcol::enumerate;
 
 			dynamic_array<array<double, 2>> pairsArray = dynamic_array<array<double, 2>>(5);
+			const dynamic_array<array<double, 2>>& cpairsArray = pairsArray;
 			dynamic_collection<array<double, 2>>& pairs = pairsArray;
+			auto& c_array = pairsArray.c_array<5>();
+			const auto& cc_array = pairsArray.c_array<5>();
 
 			auto f = [](double x) { return (x * x * x) - 2.5 * x; };
 
@@ -287,7 +294,7 @@ TesterFunction tests[] = {
 
 			index i = 0;
 			for (int n = 2; n <= 1000; n += n, i++) {
-				items.emplace(i, (unsigned int)(2 * i), n);
+				items.emplace(i, static_cast<unsigned int>(2 * i), n);
 			}
 
 			for (auto& n : iterate(items)) {
@@ -539,7 +546,30 @@ TesterFunction tests[] = {
 		[](TesterFunction& this_test)
 		{
 			using stdcol::tree;
+			using stdcol::tree_node;
 			tree<int> int_tree;
+
+			/*
+					1
+				2		3
+			  4   5
+			*/
+
+			tree_node<int>* one = new tree_node<int>(nullptr, 1);
+
+			tree_node<int>* two = new tree_node<int>(one, 2);
+			one->links().insert(one->links().size(), two);
+
+			tree_node<int>* three = new tree_node<int>(one, 3);
+			one->links().insert(one->links().size(), three);
+
+			tree_node<int>* four = new tree_node<int>(two, 4);
+			two->links().insert(two->links().size(), four);
+
+			tree_node<int>* five = new tree_node<int>(two, 5);
+			two->links().insert(two->links().size(), five);
+
+			int_tree.set_root(one);
 
 			return test_pass;
 		}

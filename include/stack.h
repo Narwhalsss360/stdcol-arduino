@@ -43,7 +43,7 @@ namespace stdcol {
         }
 
         stack<collectable_t>& operator=(const stack<collectable_t>& other) {
-            return (dynamic_array<collectable_t>&)*this = (const dynamic_array<collectable_t>&)other;
+            return static_cast<dynamic_array<collectable_t>&>(*this) = static_cast<const dynamic_array<collectable_t>&>(other);
         }
     };
 }

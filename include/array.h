@@ -8,6 +8,8 @@ namespace stdcol {
     template <typename collectable_t, index::int_type static_size>
     class array : public collection<collectable_t> {
     public:
+        using c_array_t = collectable_t[static_size];
+
         array() : static_array{ collectable_t() } {}
 
         array(const initializer_list<collectable_t>& init_list) : array<collectable_t, static_size>() {
@@ -34,6 +36,14 @@ namespace stdcol {
 
         index size() const override {
             return static_size;
+        }
+
+        c_array_t& c_array() {
+            return static_array;
+        }
+
+        const c_array_t& c_array() const {
+            return static_array;
         }
 
     protected:

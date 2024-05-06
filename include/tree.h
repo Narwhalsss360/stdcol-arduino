@@ -69,6 +69,28 @@ namespace stdcol {
             return root_node;
         }
 
+        link set_root(link new_root) {
+            link old = root_node;
+            root_node = new_root;
+            return old;
+        }
+
+        void remove(link node) {
+            if (node == nullptr) {
+                return;
+            }
+
+            for (link c : node->children_nodes) {
+                remove(c);
+            }
+
+            delete node;
+        }
+
+        virtual ~tree() {
+            remove(root_node);
+        }
+
     protected:
         link root_node;
     };
