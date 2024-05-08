@@ -24,5 +24,6 @@
 #include "avl_tree.h"
 #include "tree.h"
 #include "directed_graph.h"
+#include "collection_operators.h"
 
 #endif
