@@ -174,6 +174,7 @@ TesterFunction tests[] = {
 			using stdcol::dynamic_collection;
 			using stdcol::dynamic_array;
 			using stdcol::enumerate;
+			using namespace stdcol::operators;
 
 			dynamic_array<array<double, 2>> pairsArray = dynamic_array<array<double, 2>>(5);
 			const dynamic_array<array<double, 2>>& cpairsArray = pairsArray;
@@ -192,7 +193,7 @@ TesterFunction tests[] = {
 				array<double, 2> pair;
 				pair[0] = x;
 				pair[1] = f(x);
-				pairs.insert(pairs.size(), pair);
+				pairs +=  pair;
 			}
 
 			tlog << '[';
@@ -218,6 +219,7 @@ TesterFunction tests[] = {
 			using stdcol::initializer_list;
 			using stdcol::array;
 			using stdcol::dynamic_array;
+			using namespace stdcol::operators;
 
 			initializer_list<int> il = { 1, 2, 3 };
 
@@ -246,7 +248,7 @@ TesterFunction tests[] = {
 
 			const double end = pairs[pairs.size() - 1][0] + extra;
 			for (double x = pairs[pairs.size() - 1][0]; x <= end; x += step) {
-				pairs.insert(pairs.size(), { x, f(x) });
+				pairs +=  { x, f(x) };
 			}
 			return test_pass;
 		}
@@ -320,12 +322,13 @@ TesterFunction tests[] = {
 		[](TesterFunction& this_test)
 		{
 			using stdcol::set;
+			using namespace stdcol::operators;
 
 			set<unsigned int> some_naturals;
 
 			some_naturals.reserve(100);
 			for (int i = 0; i <= 100; i++)
-				some_naturals.insert(some_naturals.size(), i);
+				some_naturals += (unsigned int)i;
 			
 			return test_pass;
 		}
@@ -547,6 +550,7 @@ TesterFunction tests[] = {
 		{
 			using stdcol::tree;
 			using stdcol::tree_node;
+			using namespace stdcol::operators;
 			tree<int> int_tree;
 
 			/*
@@ -558,16 +562,16 @@ TesterFunction tests[] = {
 			tree_node<int>* one = new tree_node<int>(nullptr, 1);
 
 			tree_node<int>* two = new tree_node<int>(one, 2);
-			one->links().insert(one->links().size(), two);
+			one->links() += two;
 
 			tree_node<int>* three = new tree_node<int>(one, 3);
-			one->links().insert(one->links().size(), three);
+			one->links() += three;
 
 			tree_node<int>* four = new tree_node<int>(two, 4);
-			two->links().insert(two->links().size(), four);
+			two->links() += four;
 
 			tree_node<int>* five = new tree_node<int>(two, 5);
-			two->links().insert(two->links().size(), five);
+			two->links()  += five;
 
 			int_tree.set_root(one);
 
@@ -616,6 +620,34 @@ TesterFunction tests[] = {
 			for (int i = 1; i <= 7; i++) {
 				tree.emplace(i);
 			}
+
+			return test_pass;
+		}
+	},
+	{
+		"collection_operators",
+		[](TesterFunction& this_test)
+		{
+			using stdcol::dynamic_array;
+			using namespace stdcol::operators;
+
+			dynamic_array<int> ints;
+
+			for (int i = 0; i < 5; i++) {
+				ints += i;
+			}
+
+			tlog << "Loaded ints:";
+			for (int i = 0; i < ints.size(); i++) {
+				tlog << ints[i] << ' ';
+			}
+			tlog << '\n';
+
+			ints -= 2;
+			for (int i = 0; i < ints.size(); i++) {
+				tlog << ints[i] << ' ';
+			}
+			tlog << '\n';
 
 			return test_pass;
 		}
