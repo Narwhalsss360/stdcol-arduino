@@ -213,6 +213,31 @@ TesterFunction tests[] = {
 		}
 	},
 	{
+		"[Complile | Runtime] wrapper",
+		[](TesterFunction& this_test)
+		{
+			using stdcol::wrapper;
+			using stdcol::wrap;
+			using stdcol::size;
+			char local_flog_name[size(flog_name)];
+			for (int i = 0; i < size(flog_name); i++) {
+				local_flog_name[i] = flog_name[i];
+			}
+
+			auto flog_name_wrapper = wrap(flog_name);
+			auto local_flog_name_wrapper = wrap(local_flog_name);
+			char* local_flog_name_ptr = local_flog_name;
+			int ssize = size(flog_name) - 4;
+			auto resize_local_flog_name_wrapper = wrap(local_flog_name_ptr, ssize);
+
+			tlog << "flog_name_wrapper" << flog_name_wrapper << '\n';
+			tlog << "local_flog_name_wrapper" << local_flog_name_wrapper << '\n';
+			tlog << "resize_local_flog_name_wrapper" << resize_local_flog_name_wrapper << '\n';
+
+			return test_pass;
+		}
+	},
+	{
 		"[Compile] init_list",
 		[](TesterFunction& this_test) {
 			using stdcol::enumerate;
