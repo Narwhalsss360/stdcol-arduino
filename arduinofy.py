@@ -18,7 +18,8 @@ DELETE_FILES = [
 
 DELETE_TREES = [
     'include',
-    'test'
+    'test',
+    '.vscode'
 ]
 
 def move_include():
