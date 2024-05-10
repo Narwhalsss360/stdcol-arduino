@@ -11,7 +11,9 @@ INCLUDE_DIR = 'include'
 SRC_DIR = 'src'
 
 DELETE_FILES = [
-    'stdcol.sln'
+    'stdcol.sln',
+    'stdcol.vcxitems',
+    'stdcol.vcxitems.filters'
 ]
 
 DELETE_TREES = [
