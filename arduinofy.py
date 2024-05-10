@@ -2,9 +2,11 @@
 
 from os import listdir, remove
 from os.path import isfile, isdir, join
-from shutil import rmtree, move
+from shutil import rmtree, move, copytree
 from sys import argv
 
+ARDUINO_EXAMPLES_DIR_NAME = 'Arduino'
+EXAMPLES_DIR = 'examples'
 INCLUDE_DIR = 'include'
 SRC_DIR = 'src'
 
@@ -28,6 +30,28 @@ def move_include():
             move(join(INCLUDE_DIR, file_to_move), join(SRC_DIR, file_to_move))
         except OSError:
             print(f'There was an error moving {file_to_move}')
+
+def move_examples():
+    '''Move arduino examples to examples and delete non-arduino examples'''
+    for item in listdir(EXAMPLES_DIR):
+        item_dir = f'{EXAMPLES_DIR}/{item}'
+        if item != ARDUINO_EXAMPLES_DIR_NAME:
+            try:
+                if isfile(item_dir):
+                    remove(item_dir)
+                else:
+                    rmtree(item_dir)
+            except OSError:
+                print(f'There was an error deleting {item_dir=}')
+
+    arduino_dir = f'{EXAMPLES_DIR}/{ARDUINO_EXAMPLES_DIR_NAME}'
+
+    for item in listdir(arduino_dir):
+        item_dir = f'{arduino_dir}/{item}'
+        try:
+            move(item_dir, f'{EXAMPLES_DIR}/{item}', copy_function=copytree)
+        except OSError:
+            print(f'There was an error moving {item_dir=}')
 
 def delete_folders():
     '''Delete DELETE_TREES function'''
@@ -59,6 +83,7 @@ def main():
     '''Main module function'''
 
     move_include()
+    move_examples()
     delete_folders()
     delete_files()
 
