@@ -13,7 +13,8 @@ SRC_DIR = 'src'
 DELETE_FILES = [
     'stdcol.sln',
     'stdcol.vcxitems',
-    'stdcol.vcxitems.filters'
+    'stdcol.vcxitems.filters',
+    'makefile'
 ]
 
 DELETE_TREES = [
