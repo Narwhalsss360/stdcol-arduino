@@ -98,7 +98,7 @@ namespace stdcol {
                 }
             }
 
-            for (stdcol::findex src = size() - 2, dst = size() - 1; dst >= index && dst.found(); src--, dst--) {
+            for (stdcol::findex src = size() - 2, dst = size() - 1; dst >= index && dst.found() && src.found(); src--, dst--) {
                 block[dst] = block[src];
             }
 
