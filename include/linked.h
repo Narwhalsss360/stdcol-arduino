@@ -307,6 +307,16 @@ namespace stdcol {
     };
 
     template <typename T>
+    linked_iterator<T> begin(linked<T>& linked) {
+        return linked_iterator<T>(linked.head());
+    }
+
+    template <typename T>
+    linked_iterator<T> end(linked<T>& linked) {
+        return linked_iterator<T>(linked.tail());
+    }
+
+    template <typename T>
     iterable<linked_iterator<T>> iterate(linked<T>& linked) {
         return iterate<linked_iterator<T>>(linked.head(), linked.tail());
     }

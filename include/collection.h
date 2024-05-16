@@ -34,6 +34,16 @@ namespace stdcol {
     }
 
     template <typename collectable_t>
+    typename collection<collectable_t>::iterator begin(collection<collectable_t>& collection) {
+        return collection.begin();
+    }
+
+    template <typename collectable_t>
+    typename collection<collectable_t>::iterator end(collection<collectable_t>& collection) {
+        return collection.end();
+    }
+
+    template <typename collectable_t>
     collection<collectable_t>& iterate(collection<collectable_t>& collection) {
         return collection;
     }

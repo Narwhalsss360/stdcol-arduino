@@ -676,7 +676,45 @@ TesterFunction tests[] = {
 
 			return test_pass;
 		}
-	}
+	},
+    {
+        "Begin and end functions",
+        [](TesterFunction& this_test)
+        {
+            using stdcol::begin;
+            using stdcol::end;
+            using stdcol::dynamic_array;
+            using stdcol::linked;
+            using namespace stdcol::operators;
+
+            dynamic_array<int> ints;
+            for (int i = 0; i < 5; i++) {
+                ints += i * 2;
+            }
+
+            tlog << "2 * index: ";
+            for (auto __begin = begin(ints), __end = end(ints);
+                __begin != __end;
+                ++__begin) {
+                tlog << *__begin << ' ';
+            }
+
+            linked<int> linked_ints;
+            for (const int& n : ints) {
+                linked_ints += n;
+            }
+
+            tlog << "\n2 * index: ";
+            for (auto __begin = begin(linked_ints), __end = end(linked_ints);
+                __begin != __end;
+                ++__begin) {
+                tlog << *__begin << ' ';
+            }
+
+            tlog << '\n';
+            return test_pass;
+        }
+    }
 };
 
 entry_symbol {
