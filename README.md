@@ -45,6 +45,66 @@ When you see `(const)` anywhere, that means that the declaration was declared as
         * `prioritized_element()`
         * `prioritized_element(int priority, collectable_t item)`
 * `template <typename T> std::initializer_list` **Only defined on a platform with no STL (determined by stdcol_nostl macro)**, This is a general copy of STL's version
+* `template <typename T> linked_node`
+    * Type Declarations
+        * `using link = linked_node<T>*`
+    * Members
+        * `T value`
+    * Constructors
+        * `linked_node()`: Default construct `T value`
+        * `template <typename... args_t> linked_node(link previous, link next, args_t... args)`: Constructs `T value` with `args...`, and supply `previous` and `next` `link`
+    * Methods
+        * `(const) T operator&() (const)`
+        * `(const) T operator*() (const)`
+        * `link get_previous() const`
+        * `link get_next() const`
+* `template <typename T> class binary_tree_node : public abstract_tree_node<T>`
+    * Type Declarations
+        * `using link = binary_tree_node<T>*`
+        * `using const_link = const binary_tree_node<T>*`
+    * Constructors
+        * `binary_tree_node()`: Default initializes value
+        * `binary_tree_node(link) = delete`: Deleted to disambiguate constructing defualt value with a parent node
+        * `template <typename... args_t> binary_tree_node(link parent_node, args_t... args)`: Construct value with `args...`
+    * Methods
+        * `(const) T& get_value() (const)`
+        * `link parent()`
+        * `collection<typename abstract_tree_node<T>::tree_link>& children()`
+        * `link& left()`
+        * `link& right()`
+        * `index height()`
+        * `long long balance_height()`
+        * `link rotate(rotations rotation)`: Rotates node and returns what replaces this node's positin
+        * `link balance_ancestors()`
+* `enum class rotations`
+    * `left`
+    * `right`
+    * `left_right`
+    * `right_left`
+* `template <typename T> class tree_node : public abstract_tree_node<T>`
+    * Type Declarations
+        * `using node = abstract_tree_node<T>`
+        * `using link = tree_node<T>*`
+    * Constructors
+        * `tree_node()`: Default constructs value
+        * `tree_node(link parent_node) = delete`: Deleted to disambiguate constructing defualt value with a parent node
+        * `template <typename... args_t> tree_node(link parent_node, args_t... args)`: Construct value with `args...`
+    * Methods
+        * `(const) T& get_value() (const)`
+        * `collection<typename abstract_tree_node<T>::tree_link>& children()`
+        * `linked<link>& links()`
+        * `link parent()`
+* `template <typename T> class graph_node`
+    * Type Declarations
+        * `using node = graph_node<T>`
+        * `using link = node*`
+    * Constructors
+        * `template <typename... args_t> graph_node(args_t... args)`
+    * Methods
+        * `linked<link>& get_edges() const`
+        * `operator (const) T&() (const)`
+        * `bool add_edge(link other)`
+
 
 # Interfaces
 stdcol is built around it's interfaces.
@@ -120,20 +180,26 @@ stdcol is built around it's interfaces.
 # Collection Types
 * `template <typename collectable_t, index::int_type static_size> array : public collection<collectable_t>`
     * Description: 1-dimensional, static size, homogoneous collection
-    * Type Declarations
-        * `using c_array_t`: The c-array type
-    * Constructors
-        * `array()`
-        * `array(const initializer_list<collectable_t>& init_list)`
-    * Methods
-        * `(const) c_array_t& c_array() (const)`
 * `template <typename collectable_t> class dynamic_array : public dynamic_collection<collectable_t`
     * Description: 1-dimensional, dynamic size, homogoneous collection
-    * Constructors
-        * `dynamic_array()`
-        * `dynamic_array(const initializer_list<collectable_t>& init_list)`
-        * `dynamic_array(const dynamic_array<collectable_t>& other)`
-        * `dynamic_array(index size)`
+* `template <typename collectable_t> class set : public dynamic_collection<collectable_t>`
+    * Description: 1-dimensional encapsulator of dynamic_array with special insertion methods to keep unique items
+* `template <typename collectable_t> class queue : public dynamic_array<collectable_t>`
+    * Description: dynamic_array with extra methods relating to FIFO queues
+* `template <typename collectable_t> class priority_queue : dynamic_collection<prioritized_element<collectable_t>>`
+    * Description: dynamic_array encapsulator to `prioritized_element` queues
+* `template <typename collectable_t> class stack : public dynamic_array<collectable_t>`
+    * Description: dynamic_array with extra methods relating to LIFO stacks
+* `template <typename T> class linked : public dynamic_collection<T>`
+    * Description: linked list with support for non-default constructables
+* `template <typename hashable_t, typename collectable_t, typename hasher_t = hasher<hashable_t>> class hash_table : public dictionary<hashable_t, collectable_t>`
+    * Description: Key-value pair data structure
+* `template <typename T> class binary_tree : public abstract_tree<binary_tree_node<T>>`
+    * Description: Binary tree data structure
+* `template <typename T> class avl_tree : public abstract_tree<binary_tree_node<T>>`
+    * Description: Binary tree encapsulator with special extra operations to ensure balanced trees
+* `template <typename T> class directed_graph`
+    * Description: Directed graph data structure
 
 # Functional Programming
 stdcol also provides functions for manipulating collections
