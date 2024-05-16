@@ -118,6 +118,22 @@ stdcol is built around it's interfaces.
 * `template <typename collectable_t> using initializer_list`: The brace-enclosed init-list type
 
 # Collection Types
+* `template <typename collectable_t, index::int_type static_size> array : public collection<collectable_t>`
+    * Description: 1-dimensional, static size, homogoneous collection
+    * Type Declarations
+        * `using c_array_t`: The c-array type
+    * Constructors
+        * `array()`
+        * `array(const initializer_list<collectable_t>& init_list)`
+    * Methods
+        * `(const) c_array_t& c_array() (const)`
+* `template <typename collectable_t> class dynamic_array : public dynamic_collection<collectable_t`
+    * Description: 1-dimensional, dynamic size, homogoneous collection
+    * Constructors
+        * `dynamic_array()`
+        * `dynamic_array(const initializer_list<collectable_t>& init_list)`
+        * `dynamic_array(const dynamic_array<collectable_t>& other)`
+        * `dynamic_array(index size)`
 
 # Functional Programming
 stdcol also provides functions for manipulating collections
@@ -129,16 +145,44 @@ stdcol also provides functions for manipulating collections
 * `at()`: Returns a pointer to an element at a specified location
     * `template <typename collectable_t> (const) collectable_t* const at((const) collection<collectable_t>& collection, index idx)`: Returns a pointer to the element at the specified index
 * `begin()`: Returns a begin iterator
-    
+    * `template <typename collectable_t> typename collection<collectable_t>::iterator begin(collection<collectable_t>& collection)`
+    * `template <typename T> linked_iterator<T> begin(linked<T>& linked)`
 * `end()`: Returns an end iterator
+    * `template <typename collectable_t> typename collection<collectable_t>::iterator end(collection<collectable_t>& collection)`
+    * `template <typename T> linked_iterator<T> end(linked<T>& linked)`
 * `wrap()`: Wraps any subscriptable type to a `collection`
+    * `template <typename T, index::int_type ssize> wrapper<T[ssize], T> wrap(T(&array)[ssize])`
+    * `template <typename T> wrapper<T*, T> wrap(T*& array, index::int_type ssize)`
 * `iterate()`: Iterate through iterator
+    * `template <typename iterator_t> iterable<iterator_t> iterate(iterator_t begin, iterator_t end)`
+    * `template <typename array_t, index::int_type size> iterable<array_t*> iterate(array_t (&array)[size])`
+    * `template <typename iterator_t, typename dereference_t> enumerable<iterator_t, dereference_t>& iterate(enumerable<iterator_t, dereference_t>& enumerable)`
+    * `template <typename iterator_t, typename dereference_t> enumerable<iterator_t, dereference_t> iterate(enumerable<iterator_t, dereference_t>&& enumerable)`
+    * `template <typename collectable_t> collection<collectable_t>& iterate(collection<collectable_t>& collection)`
+    * `template <typename T> iterable<linked_iterator<T>> iterate(linked<T>& linked)`
+    * `template <typename collectable_t> iterable<const collectable_t*> iterate(const initializer_list<collectable_t>& init_list)`
 * `enumerate()`: Enumerate iterator, returns an iterator that dereferences (operator*()) to a `enumeration`
+    * `template <typename iterator_t, typename dereference_t> enumerable<iterator_t, dereference_t> enumerate(iterator_t begin, iterator_t end)`
+    * `template <typename array_t, index::int_type size> enumerable<array_t*, array_t&> enumerate(array_t (&array)[size])`
+    * `template <typename collectable_t> enumerable<typename collection<collectable_t>::iterator, typename collection<collectable_t>::iterator_dereference_t> enumerate(collection<collectable_t>& collection)`
+    * `template <typename T> enumerable<linked_iterator<T>, T&> enumerate(linked<T>& linked)`
+    * `template <typename collectable_t> enumerable<const collectable_t*, const collectable_t&> enumerate(const initializer_list<collectable_t>& init_list)`
 * `hash()`: hashes a `hashable_t` with default-hasher being `hasher` from using-declaration
+    * `template <typename hashable_t, typename hasher_t = hasher<hashable_t>> index hash(const hashable_t& hashable)`
 
 ## Operators
 Some implemented types have their own operators defined, but some operator overloads exist for all collections.
+* `template <typename collectable_t> dynamic_collection<collectable_t>& operator+=(dynamic_collection<collectable_t>& collection, const collectable_t& item)`: for `col += item`, adds to the end
+* `template <typename collectable_t> dynamic_collection<collectable_t>& operator-=(dynamic_collection<collectable_t>& collection, const collectable_t& item)`: for `col -= item`, removes if exists
 
 # Definitions and Macros
+* Platform-dependent Macros
+    * stdcol_platform_arduino
+    * stdcol_platform_macos
+    * stdcol_platform_linux
+    * stdcol_platform_windows
+    * stdcol_platform_generic
+    * stdcol_nostl
 
 # Best Practices
+* The functional programming paradigm is best for this library has some function overloads that are more efficient for the data structure such as `iterate(linked)`
