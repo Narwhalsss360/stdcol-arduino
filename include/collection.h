@@ -34,6 +34,11 @@ namespace stdcol {
     }
 
     template <typename collectable_t>
+    collectable_t* at(collection<collectable_t>& collection, index idx) {
+        return collection.at(idx);
+    }
+
+    template <typename collectable_t>
     typename collection<collectable_t>::iterator begin(collection<collectable_t>& collection) {
         return collection.begin();
     }

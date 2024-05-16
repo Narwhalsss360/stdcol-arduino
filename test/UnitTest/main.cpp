@@ -654,6 +654,7 @@ TesterFunction tests[] = {
 		[](TesterFunction& this_test)
 		{
 			using stdcol::dynamic_array;
+            using stdcol::at;
 			using namespace stdcol::operators;
 
 			dynamic_array<int> ints;
@@ -664,7 +665,7 @@ TesterFunction tests[] = {
 
 			tlog << "Loaded ints:";
 			for (int i = 0; i < ints.size(); i++) {
-				tlog << ints[i] << ' ';
+				tlog << *at(ints, i) << ' ';
 			}
 			tlog << '\n';
 
