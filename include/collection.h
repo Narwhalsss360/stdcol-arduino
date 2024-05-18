@@ -34,7 +34,12 @@ namespace stdcol {
     }
 
     template <typename collectable_t>
-    collectable_t* at(collection<collectable_t>& collection, index idx) {
+    collectable_t* const at(collection<collectable_t>& collection, index idx) {
+        return collection.at(idx);
+    }
+
+    template <typename collectable_t>
+    const collectable_t* at(const collection<collectable_t>& collection, index idx) {
         return collection.at(idx);
     }
 
