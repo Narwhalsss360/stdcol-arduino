@@ -6,6 +6,8 @@
 #define stdcol_platform_arduino
 #elif __has_include(<windows.h>)
 #define stdcol_platform_windows
+#elif __has_include(<unistd.h>)
+#define stdcol_platform_linux
 #else
 #define stdcol_platform_from_macros
 #endif //__has_include()
