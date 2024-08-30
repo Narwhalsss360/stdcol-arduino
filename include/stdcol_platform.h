@@ -31,7 +31,11 @@
 
 #if defined(stdcol_platform_arduino)
 #define stdcol_platform_name "Arduino"
+
+#ifndef ARDUINO_ARCH_RP2040
 #define stdcol_nostl
+#endif
+
 #elif defined(stdcol_platform_macos)
 #define stdcol_platform_name "MacOS"
 #elif defined(stdcol_platform_linux)
