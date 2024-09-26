@@ -351,10 +351,10 @@ TesterFunction tests[] = {
 
 			set<unsigned int> some_naturals;
 
-			some_naturals.reserve(100);
+			some_naturals.reserve(120);
 			for (int i = 0; i <= 100; i++)
 				some_naturals += (unsigned int)i;
-			
+            some_naturals.reserve(1);
 			return test_pass;
 		}
 	},
