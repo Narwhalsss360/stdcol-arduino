@@ -54,7 +54,12 @@ namespace stdcol {
                     return false;
                 }
 
-                for (index i = 0; i < block_size; i++) {
+                index copy_size = block_size;
+                if (new_capacity < block_size) {
+                    copy_size = new_capacity;
+                }
+
+                for (index i = 0; i < copy_size; i++) {
                     new_block[i] = block[i];
                 }
 
